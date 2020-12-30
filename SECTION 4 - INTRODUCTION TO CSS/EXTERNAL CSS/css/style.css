@@ -1,0 +1,18 @@
+   /*Select an HTML element and add style in this case the body tag was selected*/
+body{
+ background-color: #cbf1f5;
+ } 
+
+ hr{
+/*changing the border properties from hr tag*/
+ border-color:gray;
+ border-width: 5px;
+ border-style:none;
+ border-top-style: dotted;
+ width: 10%;
+}
+
+h1,h3{
+    color:#66BFBF; 
+}
+
