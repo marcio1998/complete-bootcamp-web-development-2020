@@ -1,0 +1,19 @@
+<!-- adding the header.ejs file using ejs syntax-->
+<%- include('partials/header') -%>
+    <h1>Compose</h1>
+    <form action="/compose" method="POST">
+        <div class="form-group">
+            <labe for="title">Title</labe>
+            <input class="form-control" type="text" name="composeTitle" id="title">
+        </div>
+        <div class="form-group">
+            <labe for="postField">Post</labe>
+            <textarea class="form-control" name="composePost" id="postField" rows="4" cols="50"
+                class="col-12"></textarea>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Publish</button>
+
+    </form>
+    <!-- adding the footer.ejs file using ejs syntax-->
+    <%- include('partials/footer') -%>

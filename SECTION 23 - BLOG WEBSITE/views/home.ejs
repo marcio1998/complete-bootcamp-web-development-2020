@@ -1,0 +1,16 @@
+<!-- adding the header.ejs file using ejs syntax-->
+<%- include('partials/header') -%>
+    <h1>Home</h1>
+    <!-- render data send from the server using ejs syntax -->
+    <p>
+        <%= homeStartingContent %>
+    </p>
+    <!-- using ejs syntax to add parts of js code -->
+        <% postHome.forEach(function(element){ %>
+            <h1><%= element.title %></h1>
+            <p><%= element.post.substr(0,100) + ' ....'%> 
+                <a href="/posts/<%=element.title%>"> Read More</a>
+            </p> 
+        <% }) %> 
+            <!-- adding the footer.ejs file using ejs syntax-->
+            <%- include('partials/footer') -%>
