@@ -1,0 +1,1 @@
+UPDATE products SET price=0.8 WHERE id=2;

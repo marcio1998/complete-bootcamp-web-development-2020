@@ -1,0 +1,1 @@
+INSERT INTO products VALUES (1,"pen",1.20)
