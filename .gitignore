@@ -2,3 +2,5 @@ PDF/
 SECTION 1/
 SECTION 24 - DATABASE/
 SECTION 26 - MONGODB
+node_modules/
+.DS_Store
