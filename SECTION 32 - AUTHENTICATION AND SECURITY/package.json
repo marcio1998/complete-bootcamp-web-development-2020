@@ -9,7 +9,9 @@
   "author": "Marcio Gabriel G Mengali",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
+    "md5": "^2.3.0",
     "mongoose": "^5.11.11",
     "mongoose-encryption": "^2.0.3"
   }
