@@ -35,7 +35,8 @@ mongoose.set('useCreateIndex', true);
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
-    googleId: String
+    googleId: String,
+    secret: String
 });
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
@@ -48,15 +49,15 @@ const User = new mongoose.model('User', userSchema);
 
 passport.use(User.createStrategy());
 // use static serialize and deserialize of model for passport session support
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
     done(null, user.id);
-  });
-  
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
+});
+
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
     });
-  });
+});
 
 //google auth authorization configuration
 passport.use(new GoogleStrategy({
@@ -102,6 +103,13 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 })
 
+app.get('/submit', function (req, res) {
+    if (req.isAuthenticated()) {
+        res.render('submit');
+    } else {
+        res.redirect('/login');
+    }
+})
 //Level 1 - security - Email and Password.
 
 app.post('/register', function (req, res) {
@@ -118,11 +126,15 @@ app.post('/register', function (req, res) {
 });
 
 app.get('/secrets', function (req, res) {
-    if (req.isAuthenticated()) {
-        res.render('secrets');
-    } else {
-        res.redirect('/login');
-    }
+   User.find({'secret': {$ne: null}}, function (err, foundSecrets) { 
+        if(err){
+            console.log(err)
+        }else{
+           if(foundSecrets){
+               res.render('secrets', {usersWithSecrets:foundSecrets});
+           } 
+        }
+    })
 });
 
 app.post('/login', function (req, res) {
@@ -142,6 +154,23 @@ app.post('/login', function (req, res) {
         }
     })
 });
+
+app.post('/submit', function (req, res) {
+    const submittedSecret = req.body.secret;
+
+
+    User.findById(req.user._id, function (err, foundUser) { 
+        if(err){
+            console.log(err);
+        }else{
+            foundUser.secret = submittedSecret;
+            foundUser.save(function () { 
+                res.redirect('/secrets');
+             })
+        }
+     })
+});
+
 
 app.listen(3000, function () {
     console.log('Server started on port 3000.')
